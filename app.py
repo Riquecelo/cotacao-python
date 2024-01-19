@@ -1,5 +1,5 @@
 import requests
-
+from tkinter import *
 
 def pegar_cotacoes():
     requisicao = requests.get("https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL,CNY-BRL,BRL-USD")
@@ -10,13 +10,25 @@ def pegar_cotacoes():
     cotacao_yuan = requisicao_dic['CNYBRL']['bid']
     cotacao_brl = requisicao_dic['BRLUSD']['bid']
 
-    text= f'''
+    resposta_cotacao['text']= f'''
     Dólar: {cotacao_dolar}
     Euro: {cotacao_euro}
     BTC: {cotacao_btc}
     Yuan: {cotacao_yuan}
     Real: {cotacao_brl}
     '''
-    print(text)
+    """ print(text) """
 
-pegar_cotacoes()
+
+janela = Tk()
+janela.title("Cotação Atual de Moedas")
+texto = Label(janela, text="Clique no botão para ver as cotações de moedas")
+texto.grid(column=0, row=0, padx=10, pady=10)
+
+botao = Button(janela, text="Buscar cotações", command=pegar_cotacoes)
+botao.grid(column=0, row=1, padx=10, pady=10)
+
+resposta_cotacao = Label(janela, text="")
+resposta_cotacao.grid(column=0, row=2, padx=10, pady=10)
+
+janela.mainloop()
